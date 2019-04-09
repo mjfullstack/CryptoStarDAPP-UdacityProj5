@@ -60,7 +60,13 @@ const App = {
   },
 
   createStar: function () {
-    createStar();
+    const { createStar } = this.meta.methods;
+    const name = document.getElementById("starName").value;
+    const id = document.getElementById("starId").value;
+    console.log("Hello from ./app/SCRIPTS/index.js: NAME: ", name, "; ID: ", id);
+    console.log("SCRIPTS account: ", this.account);
+    await createStar(name, id).send({from: this.account});
+    App.setStatus("New Star Owner is " + this.account + ".");
   },
 
 }
@@ -80,6 +86,20 @@ window.addEventListener('load', function () {
     )
     // Use Mist/MetaMask's provider
     window.web3 = new Web3(web3.currentProvider)
+
+  // From https://github.com/truffle-box/react-auth-box/issues/6 
+  // window.addEventListener('load', function(dispatch) {
+  //   var results
+
+  //   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  //   if (typeof window.web3 !== 'undefined') {
+  //     // Use Mist/MetaMask's provider.
+  //     results = {
+  //       web3Instance: new Web3(window.web3.currentProvider)
+  //     }
+  //     console.log('Injected web3 detected.');
+  //     resolve(store.dispatch(web3Initialized(results)))
+
   } else {
     console.warn(
       'No web3 detected. Falling back to http://127.0.0.1:9545.' +
@@ -93,3 +113,19 @@ window.addEventListener('load', function () {
 
   App.start()
 })
+/************ web3 not detected ****************
+// From https://github.com/truffle-box/react-auth-box/issues/6 
+window.addEventListener('load', function(dispatch) {
+    var results
+
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof window.web3 !== 'undefined') {
+      // Use Mist/MetaMask's provider.
+      results = {
+        web3Instance: new Web3(window.web3.currentProvider)
+      }
+
+      console.log('Injected web3 detected.');
+
+      resolve(store.dispatch(web3Initialized(results)))
+************ web3 not detected ****************/

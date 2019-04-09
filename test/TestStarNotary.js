@@ -13,7 +13,7 @@ var owner;
     let instance = await StarNotary.deployed();
     await instance.createStar('Awesome 770001 Star!', tokenId, {from: accounts[0]})
     assert.equal(await instance.tokenIdToStarInfo.call(tokenId), 'Awesome 770001 Star!')
-  });
+  }).timeout(15000);;
 
   it('lets user1 put up their star for sale', async() => {
     let instance = await StarNotary.deployed();
@@ -23,7 +23,7 @@ var owner;
     await instance.createStar('Awesome 770002 Star', starId, {from: user1});
     await instance.putStarUpForSale(starId, starPrice, {from: user1});
     assert.equal(await instance.starsForSale.call(starId), starPrice);
-  });
+  }).timeout(15000);;
 
   it('lets user1 get the funds after the sale', async() => {
     let instance = await StarNotary.deployed();
@@ -41,7 +41,7 @@ var owner;
     let value1 = Number(balanceOfUser1BeforeTransaction) + Number(starPrice);
     let value2 = Number(balanceOfUser1AfterTransaction);
     assert.equal(value1, value2);
-  });
+  }).timeout(15000);;
 
   it('lets user2 buy a star, if it is put up for sale', async() => {
     let instance = await StarNotary.deployed();
@@ -55,7 +55,7 @@ var owner;
     let balanceOfUser1BeforeTransaction = await web3.eth.getBalance(user2);
     await instance.buyStar(starId, {from: user2, value: balance});
     assert.equal(await instance.ownerOf.call(starId), user2);
-  });
+  }).timeout(15000);;
 
   it('lets user2 buy a star and decreases its balance in ether', async() => {
     let instance = await StarNotary.deployed();
@@ -73,7 +73,7 @@ var owner;
     let value = Number(balanceOfUser2BeforeTransaction) - Number(balanceAfterUser2BuysStar);
     assert.equal(value, starPrice);
     // assert.equal(balanceOfUser2BeforeTransaction.sub(balanceAfterUser2BuysStar), starPrice);
-  });
+  }).timeout(15000);;
 
   
 ////////////////////////////////////////////////
@@ -100,7 +100,7 @@ it('can add the star name and star symbol properly', async() => {
   assert.equal(await rtndSymbol, testTokenSymbol);
   // console.log( "ADD: testTokenName: ", testTokenName, "; rtndName: ", rtndName);
   // console.log( "ADD: testTokenSymbol: ", testTokenSymbol, "; rtndSymbol: ", rtndSymbol);
-});
+}).timeout(15000);;
 
 it('lets 2 users exchange stars', async() => {
   // 1. create 2 Stars with different tokenIds
@@ -124,7 +124,7 @@ it('lets 2 users exchange stars', async() => {
   // console.log("AFTER EXCHANGE: owner_2_nowOwnsId1: ", owner_2_nowOwnsId1, "; owner_2: ", owner_2)
   assert.equal(owner_1_nowOwnsId2, accounts[6] );
   assert.equal(owner_2_nowOwnsId1, accounts[7] );
-});
+}).timeout(15000);;
 
 it('lets a user transfer a star', async() => {
   // 1. create a Star with different tokenId
@@ -141,7 +141,7 @@ it('lets a user transfer a star', async() => {
   // console.log("TRANSFER: returnedStarStructName: ", returnedStarStructName, '; Expected: Awesome 770007 Star!');
   // console.log("TRANSFER: newOwner: ", newOwner);
   assert.equal (newOwner, accounts[5] );
-});
+}).timeout(15000);;
 
 it('lookUptokenIdToStarInfo test', async() => {
   // 1. create a Star with different tokenId
@@ -154,6 +154,6 @@ it('lookUptokenIdToStarInfo test', async() => {
   // 3. Verify if you Star name is the same
   assert.equal(await returnedStarStructName, 'Awesome 770008 Star!');
   // console.log("LOOKUP: returnedStarStructName: ", returnedStarStructName, '; Expected: Awesome 770008 Star!');
-});
+}).timeout(15000);;
 
 
