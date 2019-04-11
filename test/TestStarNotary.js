@@ -28,7 +28,7 @@ var owner;
   it('lets user1 get the funds after the sale', async() => {
     let instance = await StarNotary.deployed();
     let user1 = accounts[1];
-    let user2 = accounts[2];
+    let user2 = accounts[0];
     let starId = 770003;
     let starPrice = web3.utils.toWei(".01", "ether");
     let balance = web3.utils.toWei(".05", "ether");
@@ -46,7 +46,7 @@ var owner;
   it('lets user2 buy a star, if it is put up for sale', async() => {
     let instance = await StarNotary.deployed();
     let user1 = accounts[1];
-    let user2 = accounts[2];
+    let user2 = accounts[0];
     let starId = 770004;
     let starPrice = web3.utils.toWei(".01", "ether");
     let balance = web3.utils.toWei(".05", "ether");
@@ -60,7 +60,7 @@ var owner;
   it('lets user2 buy a star and decreases its balance in ether', async() => {
     let instance = await StarNotary.deployed();
     let user1 = accounts[1];
-    let user2 = accounts[2];
+    let user2 = accounts[0];
     let starId = 770005;
     let starPrice = web3.utils.toWei(".01", "ether");
     let balance = web3.utils.toWei(".05", "ether");
@@ -122,8 +122,8 @@ it('lets 2 users exchange stars', async() => {
   let owner_2_nowOwnsId1 = await instance.ownerOf.call(tokenId_1);
   // console.log("AFTER EXCHANGE: owner_1_nowOwnsId2: ", owner_1_nowOwnsId2, "; owner_1: ", owner_1)
   // console.log("AFTER EXCHANGE: owner_2_nowOwnsId1: ", owner_2_nowOwnsId1, "; owner_2: ", owner_2)
-  assert.equal(owner_1_nowOwnsId2, accounts[6] );
-  assert.equal(owner_2_nowOwnsId1, accounts[7] );
+  assert.equal(owner_1_nowOwnsId2, accounts[0] );
+  assert.equal(owner_2_nowOwnsId1, accounts[1] );
 }).timeout(15000);;
 
 it('lets a user transfer a star', async() => {
@@ -133,14 +133,14 @@ it('lets a user transfer a star', async() => {
   await instance.createStar('Awesome 770007 Star!', tokenId, {from: accounts[1]})
   assert.equal(await instance.tokenIdToStarInfo.call(tokenId), 'Awesome 770007 Star!');
   // 2. use the transferStar function implemented in the Smart Contract
-  await instance.transferStar( accounts[5], tokenId, {from: accounts[0]} );
+  await instance.transferStar( accounts[1], tokenId, {from: accounts[0]} );
   newOwner = await instance.ownerOf.call(tokenId);
   // 3. Verify the star owner changed.
   let returnedStarStructName = await instance.lookUptokenIdToStarInfo(tokenId)
   assert.equal(await returnedStarStructName, 'Awesome 770007 Star!');
   // console.log("TRANSFER: returnedStarStructName: ", returnedStarStructName, '; Expected: Awesome 770007 Star!');
   // console.log("TRANSFER: newOwner: ", newOwner);
-  assert.equal (newOwner, accounts[5] );
+  assert.equal (newOwner, accounts[1] );
 }).timeout(15000);;
 
 it('lookUptokenIdToStarInfo test', async() => {
