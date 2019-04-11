@@ -133,14 +133,14 @@ it('lets a user transfer a star', async() => {
   await instance.createStar('Awesome 770007 Star!', tokenId, {from: accounts[1]})
   assert.equal(await instance.tokenIdToStarInfo.call(tokenId), 'Awesome 770007 Star!');
   // 2. use the transferStar function implemented in the Smart Contract
-  await instance.transferStar( accounts[1], tokenId, {from: accounts[0]} );
+  await instance.transferStar( accounts[0], tokenId, {from: accounts[1]} );
   newOwner = await instance.ownerOf.call(tokenId);
   // 3. Verify the star owner changed.
   let returnedStarStructName = await instance.lookUptokenIdToStarInfo(tokenId)
   assert.equal(await returnedStarStructName, 'Awesome 770007 Star!');
   // console.log("TRANSFER: returnedStarStructName: ", returnedStarStructName, '; Expected: Awesome 770007 Star!');
   // console.log("TRANSFER: newOwner: ", newOwner);
-  assert.equal (newOwner, accounts[1] );
+  assert.equal (newOwner, accounts[0] );
 }).timeout(15000);;
 
 it('lookUptokenIdToStarInfo test', async() => {
