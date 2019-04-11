@@ -47,11 +47,20 @@ const App = {
   // Implement Task 4 Modify the front end of the DAPP
   lookUp: async function (){
     const { lookUptokenIdToStarInfo } = this.meta.methods;
+    // const { tokenIdToStarInfo } = this.meta.methods; // NOPE
     const lookid = document.getElementById("lookid").value;
     console.log("Hello from ./app/SRC/index.js: ID: ", lookid);
-    let foundStar = await lookUptokenIdToStarInfo(lookid);
+    let foundStar = await lookUptokenIdToStarInfo(lookid).call(lookid);
+    console.log("LOOKUP: lookid: ", lookid);
+    console.log("foundStar: ", foundStar);
+    console.log("foundStar: ", foundStar.Star);
+    console.log("foundStar: ", foundStar.Star.name);
+    // let foundStar = await lookUptokenIdToStarInfo(lookid);
+    // let bruteStar =  await tokenIdToStarInfo.call(tokenId);
+    // console.log("bruteStar: ", bruteStar);
     App.setStatus("Found Star NAME is --> " + foundStar + " <--.");
-    console.log("LOOKUP: lookid: ", lookid, "; foundStar: ", foundStar);
+    // console.log("foundStar: ", foundStar._parent._jsonInterface[4].outputs[0]);
+    // console.log("foundStar: ", foundStar._parent._provider);
   }
 
 };
